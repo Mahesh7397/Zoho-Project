@@ -1,0 +1,87 @@
+info arguments;
+
+task_id=arguments.get("key");
+
+// To get record with the record id 
+response_map=zoho.cliq.getRecordById("tasks", task_id);
+
+response = map();
+response.put("type","form");
+response.put("title","Update Task");
+response.put("name","TaskManager");
+response.put("hint","Update a task");
+response.put("button_label","Submit");
+inputsList = list();
+inputsList0 = map();
+inputsList0.put("label","Task Name");
+inputsList0.put("name","Title");
+inputsList0.put("placeholder","My First Task");
+inputsList0.put("value",response_map.get("title"));
+inputsList0.put("min_length","0");
+inputsList0.put("name","Title");
+inputsList0.put("max_length","25");
+inputsList0.put("mandatory",true);
+inputsList0.put("type","text");
+inputsList.add(inputsList0);
+inputsList1 = map();
+inputsList1.put("label","Discription");
+inputsList1.put("name","Discription");
+inputsList1.put("placeholder","Describe the task");
+inputsList0.put("value",response_map.get("discription"));
+inputsList1.put("min_length","0");
+inputsList1.put("max_length","1000");
+inputsList1.put("mandatory",false);
+inputsList1.put("type","textarea");
+inputsList.add(inputsList1);
+inputsList2 = map();
+inputsList2.put("label","Starting Date");
+inputsList2.put("name","startingdate");
+inputsList2.put("placeholder","Choose when you'd like to participate.");
+inputsList2.put("value",response_map.get("startdate"));
+filter = map();
+filter.put("from","2025-11-29");
+inputsList2.put("filter",filter);
+inputsList2.put("mandatory",false);
+inputsList2.put("type","date");
+inputsList.add(inputsList2);
+inputsList3 = map();
+inputsList3.put("label","Ending Date");
+inputsList3.put("name","endingdate");
+inputsList3.put("placeholder","Choose when you'd like to participate.");
+inputsList3.put("value",response_map.get("enddate"));
+filter = map();
+filter.put("from","2025-11-29");
+inputsList3.put("filter",filter);
+inputsList3.put("mandatory",false);
+inputsList3.put("type","date");
+inputsList.add(inputsList3);
+response.put("inputs",inputsList);
+action = map();
+action.put("type","invoke.function");
+action.put("name","function");
+response.put("action",action);
+return response;
+
+
+// {}
+// "type": "form",
+// "title": "Zylker Annual Marathon",
+// "name": "marathon",
+// "hint": "Register yourself for the Zylker Annual Marathon!",
+// "button_label": "Submit",
+// "inputs": [
+// {
+// "label": "Name",
+// "name": "text",
+// "placeholder": "Scott Fisher",
+// "value": "fghgfg",
+// "min_length": "0",
+// "max_length": "25",
+// "mandatory": false,
+// "type": "text"
+// }
+// ],
+// "action": {
+// "type": "invoke.function",
+// "name": "function"
+// }
