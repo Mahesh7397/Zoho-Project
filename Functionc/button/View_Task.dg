@@ -1,0 +1,25 @@
+responce=Map();
+info user;
+
+responce={"text":"Her the list u have a tasks\nthere:","bot":{"name":"MAHESHWARAN TV"},"card":{"theme":"modern-inline"}};
+query_map = Map();
+
+criteria_string="userid=="+user.get("id"); 
+query_map.put("criteria",criteria_string); 
+response_map=zoho.cliq.getRecords("singletaskmanager", query_map); 
+record={}; 
+slid=Collection();
+if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("list").size()>0){ 
+    record=response_map.get("list");
+    if (record.size()>0){
+        for each data in record{
+            slid.insert({"type":"text","title":"Title for your Text","buttons":[{"label":"view","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":""},{"label":"Update","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":""}],"data":"Zoho Corporation, founded in 1996, known for pioneering software as a service (SAAS) model."});
+        }
+    }
+}
+
+responce.put("slides",slid);
+
+return responce;
+
+//singletaskmanager

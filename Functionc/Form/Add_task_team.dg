@@ -1,0 +1,34 @@
+
+response = Map();
+formValues = form.get("values");
+info formValues;
+values_map = Map();
+values_map.put("enddate",formValues.get("EndDate"));
+values_map.put("teamsize",formValues.get("users").size());
+values_map.put("startdate",formValues.get("startDate"));
+values_map.put("createdby",user.get("zoho_user_id"));
+values_map.put("discription",formValues.get("Discription"));
+values_map.put("title",formValues.get("Title"));
+response_map = zoho.cliq.createRecord("tasks",values_map);
+task_id = 0;
+if(response_map.get("status") == "SUCCESS")
+{
+	task_id = response_map.get("object").get("id");
+}
+response={"text": "Successfully task created by "+user.get("first_name")+" \nTask:"+response_map.get("object").get("title"),"bot": {"name": "Bot name"},"card": {"theme": "poll"},"buttons": [{"label": "view","hint": "","type": "+","action": {"type": "invoke.function","data": {"name": "SampleFunction"}},"key": ""}]};
+
+if (formValues.get("users").size()>0){
+    for each d in formValues.get("users")
+    {
+       values_map = Map(); 
+       values_map.put("status", "pending"); 
+       values_map.put("userid", d.get("id")); 
+       values_map.put("taskid", task_id); 
+       values_map.put("createdby", user.get("first_name")); 
+       response_map=zoho.cliq.createRecord("assingtasklist", values_map);
+       //send message the assigned users
+       message={"card":{"theme":"modern-inline"},"buttons":[{"label":" Finish","hint":"","type":"+","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":"userid"},{"label":"Details","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":"task_id"}],"slides":[{"type":"text","title":"Title for your Text","data":"Zoho Corporation, founded in 1996, known for pioneering software as a service (SAAS) model."}],"text":"Your message on the card goes here!","bot":{"name":"Task-Manager"}}
+       zoho.cliq.postToUser(d.get("id") ,message); 
+    }
+}
+return response;
