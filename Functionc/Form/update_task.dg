@@ -1,0 +1,13 @@
+
+response = Map();
+formValues = form.get("values");
+
+values_map = Map(); 
+values_map.put("enddate", "ABC"); 
+values_map.put("status", "ABC"); 
+values_map.put("userid", "123"); 
+values_map.put("startdate", "ABC"); 
+values_map.put("discription", "ABC"); 
+values_map.put("title", "ABC"); 
+
+response_map=zoho.cliq.updateRecord("singletaskmanager", formValues.get("taskid"), values_map);

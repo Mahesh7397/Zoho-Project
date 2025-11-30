@@ -5,7 +5,7 @@ info formValues;
 values_map = Map();
 values_map.put("enddate",formValues.get("EndDate"));
 values_map.put("teamsize",formValues.get("users").size());
-values_map.put("startdate",formValues.get("startDate"));
+values_map.put("startdate",formValues.get("StartDate"));
 values_map.put("createdby",user.get("zoho_user_id"));
 values_map.put("discription",formValues.get("Discription"));
 values_map.put("title",formValues.get("Title"));

@@ -1,0 +1,13 @@
+response = Map();
+formValues = form.get("values");
+values_map = Map(); 
+values_map.put("enddate",formValues.get("enddate"));
+values_map.put("startdate",formValues.get("startdate"));
+values_map.put("discription",formValues.get("discription"));
+values_map.put("title",formValues.get("title"));
+
+response_map=zoho.cliq.updateRecord("tasks", formValues.get("taskid"), values_map); 
+
+response={"bot":{"name":"MAHESHWARAN TV"},"card":{"theme":"modern-inline"},"text":"Task is Updated"}
+
+return response;

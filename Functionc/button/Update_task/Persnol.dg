@@ -1,0 +1,80 @@
+info arguments;
+
+task_id=arguments.get("key");
+
+// To get record with the record id 
+
+
+
+tasK_id=arguments.get("key");
+
+response_map=zoho.cliq.getRecordById("tasks", task_id);
+record=response_map.get("object");
+
+response={
+"type": "form",
+"title": "Edit Task",
+"name": "Edit Task",
+"hint": "",
+"button_label": "Submit",
+"inputs": [
+{
+"label": "Task ID",
+"name": "taskid",
+"placeholder": "jkkj",
+"value":task_id,
+"min_length": "0",
+"max_length": "25",
+"mandatory": false,
+"type": "text"
+},
+{
+"label": "Title",
+"name": "title",
+"placeholder": "Sc",
+"value": record.get("title"),
+"min_length": "0",
+"max_length": "25",
+"mandatory": false,
+"type": "text"
+},
+{
+"label": "Discription",
+"name": "discription",
+"placeholder": "Tell us about yourself... ",
+"value":record.get("discription"),
+"min_length": "0",
+"max_length": "1000",
+"mandatory": false,
+"type": "textarea"
+},
+{
+"label": "start date",
+"name": "startdate",
+"placeholder": "Choose when you'd like to participate.",
+"value": record.get("startdate"),
+"filter": {
+"from": "2025-11-30"
+},
+"mandatory": false,
+"type": "date"
+},
+{
+"label": "End date",
+"name": "enddate",
+"placeholder": "Choose when you'd like to participate.",
+"value": record.get("enddate"),
+"filter": {
+"from": "2025-11-30"
+},
+"mandatory": false,
+"type": "date"
+}
+],
+"action": {
+"type": "invoke.function",
+"name": "function"
+}
+}
+
+return response;
