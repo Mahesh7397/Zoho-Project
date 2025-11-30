@@ -10,7 +10,7 @@ query_map.put("criteria",criteria_string);
 
 response_map=zoho.cliq.getRecords("tasks", query_map); 
 response_map1=zoho.cliq.getRecords("assingtasklist", query_map1);
-record={}; 
+
 slid=Collection();
 if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("list").size()>0){ 
     record=response_map.get("list");

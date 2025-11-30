@@ -1,0 +1,12 @@
+info arguments;
+response={};
+record_id=arguments.get("key");
+
+values_map = Map(); 
+values_map.put("status","finished");
+response_map=zoho.cliq.updateRecord("singletaskmanager", record_id, values_map);
+if(response_map.get("status").equalsIgnoreCase("SUCCESS")){
+    responce={};
+}
+
+return responce;

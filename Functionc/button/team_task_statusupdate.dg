@@ -1,0 +1,23 @@
+info arguments;
+response={};
+// To get record with the record id 
+record_id=arguments.get("key"); 
+response_map=zoho.cliq.getRecordById("assingtasklist", record_id);
+if(response_map.get("status").equalsIgnoreCase("SUCCESS")){
+    record=response_map.get("object");
+    values_map = Map(); 
+    values_map.put("status","finished");
+    response_map1=zoho.cliq.updateRecord("assingtasklist", record_id, values_map);
+    if(response_map1.get("status").equalsIgnoreCase("SUCCESS")){
+       responce={};
+       message={};
+       re_map=zoho.cliq.getRecordById("tasks",record.get("taskid"));
+       ru_map=re_map.get("object");
+       zoho.cliq.postToUser(ru_map.get("createdby") ,message);
+    }
+}
+else{
+    responce={};
+}
+
+return responce;
