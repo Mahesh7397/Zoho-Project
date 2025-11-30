@@ -1,16 +1,32 @@
 responce={"text":"Her the list u have a tasks\nthere:","bot":{"name":"MAHESHWARAN TV"},"card":{"theme":"modern-inline"}};
 query_map = Map();
+query_map1 = Map();
+
+criteria_string1="userid=="+user.get("id"); 
+query_map1.put("criteria",criteria_string1); 
 
 criteria_string="createdby=="+user.get("id"); 
-query_map.put("criteria",criteria_string); 
+query_map.put("criteria",criteria_string);
+
 response_map=zoho.cliq.getRecords("tasks", query_map); 
+response_map1=zoho.cliq.getRecords("assingtasklist", query_map1);
 record={}; 
 slid=Collection();
 if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("list").size()>0){ 
     record=response_map.get("list");
     if (record.size()>0){
         for each data in record{
-            slid.insert({"type":"text","title":"Title for your Text","buttons":[{"label":"view","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":""},{"label":"Update","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":""}],"data":"Zoho Corporation, founded in 1996, known for pioneering software as a service (SAAS) model."});
+            slid.insert({"type":"text","title":data.get("title"),"buttons":{{"label":"view","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":data.get("id")},{"label":"Edit","hint":"","action":{"type":"invoke.function","data":{"name":"editfunction"}},"key":data.get("id")}},"data":data.get("discription")});
+        }
+    }
+}
+if(response_map1.get("status").equalsIgnoreCase("SUCCESS") && response_map1.get("list").size()>0){ 
+    record1=response_map1.get("list");
+    if (record1.size()>0){
+        for each data in record1{
+            re_map=zoho.cliq.getRecordById("tasks",data.get("taskid"));
+            ru_map=re_map.get("object");
+            slid.insert({"type":"text","title":ru_map.get("title"),"buttons":[{"label":"Finish","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":data.get("id")}],"data":ru_map.get("discription")+"\n\nStatus:"+data.get("status")});
         }
     }
 }
@@ -18,6 +34,3 @@ if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("l
 responce.put("slides",slid);
 
 return responce;
-
-
-//{"text":"Her the list u have a tasks\nthere:","bot":{"name":"MAHESHWARAN TV"},"card":{"theme":"modern-inline"},"slides":[{"type":"text","title":"Title for your Text","buttons":[{"label":"view","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":""},{"label":"Update","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":""}],"data":"Zoho Corporation, founded in 1996, known for pioneering software as a service (SAAS) model."},{"type":"text","title":"Title for your Text","buttons":[{"label":"Button 1","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":""},{"label":"Button 2","hint":"","action":{"type":"invoke.function","data":{"name":"SampleFunction"}},"key":""}],"data":"Zoho Corporation, founded in 1996, known for pioneering software as a service (SAAS) model."}]}

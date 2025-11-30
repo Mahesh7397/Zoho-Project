@@ -3,12 +3,9 @@ info arguments;
 task_id=arguments.get("key");
 
 // To get record with the record id 
-
-
-
 tasK_id=arguments.get("key");
 
-response_map=zoho.cliq.getRecordById("tasks", task_id);
+response_map=zoho.cliq.getRecordById("singletaskmanager", task_id);
 record=response_map.get("object");
 
 response={
